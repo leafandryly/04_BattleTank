@@ -7,6 +7,7 @@
 #include "TankPlayerController.generated.h"
 
 class ATank;
+class UTankAimingComponent;
 
 /**
  * 
@@ -17,8 +18,6 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-	ATank*GetControlledTank()const;
-	
 	virtual void BeginPlay() override;
 
 	// Called every frame
@@ -27,6 +26,13 @@ public:
 	//Start the tank moving the barrel so that the shot would hit
 	//where the crosshair intersects the world
 	void AimTowardCrosshair();
+
+protected:
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	ATank*GetControlledTank()const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = Setup)
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 	//return an OUT parameter if hit landscape

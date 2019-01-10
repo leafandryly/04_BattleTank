@@ -20,13 +20,16 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	void LaunchProjectile(float Speed);
 
+	virtual void Tick(float DeltaSeconds) override;
+
 private:
-	UProjectileMovementComponent* ProjectileMovement = nullptr;
-	
+	UProjectileMovementComponent* ProjectileMovement = nullptr;	
+
+	UPROPERTY(VisibleAnywhere, Category = Component)
+	UStaticMeshComponent* CollisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = Component)
+	UParticleSystemComponent* LaunchBlast = nullptr;
 };

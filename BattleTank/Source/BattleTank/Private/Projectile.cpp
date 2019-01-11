@@ -2,6 +2,9 @@
 
 #include "Projectile.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+#include "Runtime/Engine/Classes/GameFramework/DamageType.h"
+#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "kismet/GameplayStatics.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -28,6 +31,11 @@ AProjectile::AProjectile()
 	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
+void AProjectile::OnTimerExpire()
+{
+	Destroy();
+}
+
 // Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
@@ -40,6 +48,21 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>()
+	);
+
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimerExpire, DestroyDelay, false);
 }
 
 void AProjectile::LaunchProjectile(float Speed)

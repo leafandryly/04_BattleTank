@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h" 
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -33,4 +34,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = Component)
 	UParticleSystemComponent* ImpactBlast = nullptr;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	UPROPERTY(VisibleAnywhere, Category = Component)
+	URadialForceComponent* ExplosionForce = nullptr;
 };

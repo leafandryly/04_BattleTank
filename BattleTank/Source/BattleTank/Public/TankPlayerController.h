@@ -30,6 +30,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = Setup)
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
+	UFUNCTION()
+	void OnPossedTankDeath();
+
 private:
 	//return an OUT parameter if hit landscape
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
@@ -44,5 +47,6 @@ private:
 	float LineTraceRange = 1000000;
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	void SetPawn(APawn * InPawn);
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation)const;
 };

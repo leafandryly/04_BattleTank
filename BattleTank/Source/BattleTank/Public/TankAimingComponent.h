@@ -62,13 +62,14 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float ReloadTimeInSeconds = 0.1;
+	float ReloadTimeInSeconds = 2.0;
 
 	void MoveBarrelTowards(FVector AimDirection);
 
 	bool IsBarrelMoving();
 
 	double LastFireTime = 0;
+
 	FVector AimDirection;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)

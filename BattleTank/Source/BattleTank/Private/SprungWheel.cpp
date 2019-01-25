@@ -11,13 +11,13 @@ ASprungWheel::ASprungWheel()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
-	SetRootComponent(Mass);
+	Mass->SetupAttachment(MassWheelConstraint);
 
 	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
-	Wheel->SetupAttachment(Mass);
+	Wheel->SetupAttachment(MassWheelConstraint);
 
 	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("MassWheelConstraint"));
-	MassWheelConstraint->SetupAttachment(Mass);
+	SetRootComponent(MassWheelConstraint);
 }
 
 // Called when the game starts or when spawned
@@ -25,6 +25,15 @@ void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	GetAttachParentActor();
+	if (GetAttachParentActor())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Not null"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Null"));
+	}
 }
 
 // Called every frame

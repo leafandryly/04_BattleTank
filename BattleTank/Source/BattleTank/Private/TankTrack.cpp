@@ -32,7 +32,7 @@ void UTankTrack::DriveTrack(float CurrentThrottle)
 	}
 }
 
-TArray<ASprungWheel*>UTankTrack::GetWheels() const
+TArray<ASprungWheel*> UTankTrack::GetWheels() const
 {
 	TArray<ASprungWheel*> ResultArray;
 	TArray<USceneComponent*> Children;
@@ -42,7 +42,7 @@ TArray<ASprungWheel*>UTankTrack::GetWheels() const
 		auto SpawnPointChild = Cast<USpawnPoint>(Child);
 		if (!SpawnPointChild) continue;
 
-		AActor* SpawnedChild = SpawnPointChild->GetSpawnedActor;
+		AActor* SpawnedChild = SpawnPointChild->GetSpawnedActor();
 		auto SprungWheel = Cast<ASprungWheel>(SpawnedChild);
 		if (!SprungWheel) continue;
 
